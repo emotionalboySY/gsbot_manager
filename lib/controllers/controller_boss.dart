@@ -219,6 +219,7 @@ class BossController extends GetxController {
   }
 
   // 새로고침
+  @override
   Future<void> refresh() async {
     await loadBosses();
   }

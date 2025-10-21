@@ -165,7 +165,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildYearPicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedYear,
+      initialValue: _selectedYear,
       decoration: InputDecoration(
         labelText: '연도',
         border: OutlineInputBorder(),
@@ -187,7 +187,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildMonthPicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedMonth,
+      initialValue: _selectedMonth,
       decoration: InputDecoration(
         labelText: '월',
         border: OutlineInputBorder(),
@@ -196,7 +196,7 @@ class ExactTimeMessageDetailScreenState
         final month = index + 1;
         return DropdownMenuItem(
           value: month,
-          child: Text('${month}월'),
+          child: Text('$month월'),
         );
       }),
       onChanged: (value) {
@@ -214,7 +214,7 @@ class ExactTimeMessageDetailScreenState
   Widget _buildDayPicker() {
     final lastDay = DateTime(_selectedYear, _selectedMonth + 1, 0).day;
     return DropdownButtonFormField<int>(
-      value: _selectedDay > lastDay ? lastDay : _selectedDay,
+      initialValue: _selectedDay > lastDay ? lastDay : _selectedDay,
       decoration: InputDecoration(
         labelText: '일',
         border: OutlineInputBorder(),
@@ -223,7 +223,7 @@ class ExactTimeMessageDetailScreenState
         final day = index + 1;
         return DropdownMenuItem(
           value: day,
-          child: Text('${day}일'),
+          child: Text('$day일'),
         );
       }),
       onChanged: (value) {
@@ -236,7 +236,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildHourPicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedHour,
+      initialValue: _selectedHour,
       decoration: InputDecoration(
         labelText: '시',
         border: OutlineInputBorder(),
@@ -257,7 +257,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildMinutePicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedMinute,
+      initialValue: _selectedMinute,
       decoration: InputDecoration(
         labelText: '분',
         border: OutlineInputBorder(),

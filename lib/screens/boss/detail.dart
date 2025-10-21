@@ -240,7 +240,7 @@ class BossDetailScreenState extends State<BossDetailScreen>
                 final index = entry.key;
                 final phase = entry.value;
                 return _buildPhaseCard(index + 1, phase);
-              }).toList(),
+              }),
           ],
         ),
       ),

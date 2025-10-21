@@ -125,7 +125,7 @@ class CreateDailyMessageScreenState extends State<CreateDailyMessageScreen> {
 
   Widget _buildHourPicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedHour,
+      initialValue: _selectedHour,
       decoration: InputDecoration(
         labelText: '시',
         border: OutlineInputBorder(),
@@ -148,7 +148,7 @@ class CreateDailyMessageScreenState extends State<CreateDailyMessageScreen> {
 
   Widget _buildMinutePicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedMinute,
+      initialValue: _selectedMinute,
       decoration: InputDecoration(
         labelText: '분',
         border: OutlineInputBorder(),

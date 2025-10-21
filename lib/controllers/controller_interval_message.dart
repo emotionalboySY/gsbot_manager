@@ -13,7 +13,7 @@ class IntervalMessageController extends GetxController {
   final RxList<DailyMessage> dailyMessages = <DailyMessage>[].obs; // 추가
   final RxBool isLoading = false.obs;
   final RxString searchQuery = ''.obs;
-  final RxInt selectedTabIndex = 0.obs; // 0: 정확한 시간, 1: 요일 시간
+  final RxInt selectedTabIndex = 0.obs; // 0: 정확한 시간, 1: 요일 시간, 2: 매일
 
   // 필터링된 매일 메시지 목록
   List<DailyMessage> get filteredDailyMessages {
@@ -327,7 +327,9 @@ class IntervalMessageController extends GetxController {
 
       return true;
     } catch (e) {
-      print('updateDailyMessage 오류: $e');
+      if (kDebugMode) {
+        print('updateDailyMessage 오류: $e');
+      }
       return false;
     } finally {
       isLoading.value = false;
@@ -343,7 +345,9 @@ class IntervalMessageController extends GetxController {
 
       return true;
     } catch (e) {
-      print('deleteDailyMessage 오류: $e');
+      if (kDebugMode) {
+        print('deleteDailyMessage 오류: $e');
+      }
       return false;
     } finally {
       isLoading.value = false;
