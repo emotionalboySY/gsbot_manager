@@ -81,7 +81,7 @@ class ExactTimeMessage {
   }
 
   String get formattedDateTime {
-    return '${year}년 ${month.toString().padLeft(2, '0')}월 ${day.toString().padLeft(2, '0')}일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    return '$year년 ${month.toString().padLeft(2, '0')}월 ${day.toString().padLeft(2, '0')}일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 }
 
@@ -156,8 +156,77 @@ class WeeklyMessage {
   }
 
   String get formattedTime {
-    return '${dayOfWeek}요일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    return '$dayOfWeek요일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 
   static const List<String> daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+}
+
+class DailyMessage {
+  final String? id;
+  final int hour;
+  final int minute;
+  final String message;
+  final bool isActive;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  DailyMessage({
+    this.id,
+    required this.hour,
+    required this.minute,
+    required this.message,
+    this.isActive = true,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory DailyMessage.fromJson(Map<String, dynamic> json) {
+    return DailyMessage(
+      id: json['_id'],
+      hour: json['hour'],
+      minute: json['minute'],
+      message: json['message'],
+      isActive: json['isActive'] ?? true,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hour': hour,
+      'minute': minute,
+      'message': message,
+      'isActive': isActive,
+    };
+  }
+
+  DailyMessage copyWith({
+    String? id,
+    int? hour,
+    int? minute,
+    String? message,
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return DailyMessage(
+      id: id ?? this.id,
+      hour: hour ?? this.hour,
+      minute: minute ?? this.minute,
+      message: message ?? this.message,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  String get formattedTime {
+    return '매일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  }
 }
