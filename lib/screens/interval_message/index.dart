@@ -16,13 +16,21 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('정기 메시지 관리'),
+          title: Text(
+            '정기 메시지 관리',
+            style: TextStyle(
+              letterSpacing: -1.5,
+            ),
+          ),
           bottom: TabBar(
             onTap: (index) => controller.setTabIndex(index),
             tabs: [
               Tab(text: '정확한 시간'),
               Tab(text: '요일 시간'),
             ],
+            labelStyle: TextStyle(
+              letterSpacing: -1.5,
+            ),
           ),
           actions: [
             IconButton(
@@ -70,7 +78,7 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
               SizedBox(height: 16),
               Text(
                 '등록된 메시지가 없습니다.',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
+                style: TextStyle(fontSize: 18, color: Colors.grey, letterSpacing: -1),
               ),
             ],
           ),
@@ -154,6 +162,7 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: message.isActive ? Colors.black : Colors.grey,
+                        letterSpacing: -1,
                       ),
                     ),
                   ),
@@ -168,11 +177,22 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                 ],
               ),
               SizedBox(height: 8),
+              SizedBox(
+                height: 1,
+                width: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              SizedBox(height: 8),
               Text(
                 message.message,
                 style: TextStyle(
                   fontSize: 14,
                   color: message.isActive ? Colors.black87 : Colors.grey,
+                  letterSpacing: -1,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
