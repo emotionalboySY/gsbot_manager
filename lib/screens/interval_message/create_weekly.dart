@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/controller_interval_message.dart';
@@ -109,7 +108,7 @@ class CreateWeeklyMessageScreenState extends State<CreateWeeklyMessageScreen> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: _selectedDayOfWeek,
+              initialValue: _selectedDayOfWeek,
               decoration: InputDecoration(
                 labelText: '요일',
                 border: OutlineInputBorder(),
@@ -117,7 +116,7 @@ class CreateWeeklyMessageScreenState extends State<CreateWeeklyMessageScreen> {
               items: WeeklyMessage.daysOfWeek.map((day) {
                 return DropdownMenuItem(
                   value: day,
-                  child: Text('${day}요일'),
+                  child: Text('$day요일'),
                 );
               }).toList(),
               onChanged: (value) {
@@ -148,7 +147,7 @@ class CreateWeeklyMessageScreenState extends State<CreateWeeklyMessageScreen> {
 
   Widget _buildHourPicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedHour,
+      initialValue: _selectedHour,
       decoration: InputDecoration(
         labelText: '시',
         border: OutlineInputBorder(),
@@ -169,7 +168,7 @@ class CreateWeeklyMessageScreenState extends State<CreateWeeklyMessageScreen> {
 
   Widget _buildMinutePicker() {
     return DropdownButtonFormField<int>(
-      value: _selectedMinute,
+      initialValue: _selectedMinute,
       decoration: InputDecoration(
         labelText: '분',
         border: OutlineInputBorder(),
