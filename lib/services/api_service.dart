@@ -237,6 +237,86 @@ class ApiService {
     }
   }
 
+  // ============================================
+  // Daily Message API
+  // ============================================
+
+  // 모든 매일 메시지 조회
+  Future<List<DailyMessage>> getAllDailyMessages() async {
+    try {
+      final response = await _dio.get('/intervalMessage/daily');
+      final data = response.data['data'] as List;
+      return data.map((json) => DailyMessage.fromJson(json)).toList();
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  // 매일 메시지 생성
+  Future<DailyMessage> createDailyMessage(DailyMessage message) async {
+    try {
+      if (kDebugMode) {
+        print('createDailyMessage 호출: ${message.toJson()}');
+      }
+      final response = await _dio.post(
+        '/intervalMessage/daily',
+        data: message.toJson(),
+      );
+      if (kDebugMode) {
+        print('createDailyMessage 응답: ${response.data}');
+      }
+
+      if (response.data is Map<String, dynamic>) {
+        if (response.data.containsKey('data')) {
+          return DailyMessage.fromJson(response.data['data']);
+        } else {
+          return DailyMessage.fromJson(response.data);
+        }
+      }
+      throw Exception('예상치 못한 응답 형식');
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print('createDailyMessage DioException: ${e.response?.data}');
+      }
+      throw _handleDioError(e);
+    } catch (e) {
+      if (kDebugMode) {
+        print('createDailyMessage 일반 오류: $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  // 매일 메시지 수정
+  Future<DailyMessage> updateDailyMessage(String id, DailyMessage message) async {
+    try {
+      final response = await _dio.put(
+        '/intervalMessage/daily/$id',
+        data: message.toJson(),
+      );
+
+      if (response.data is Map<String, dynamic>) {
+        if (response.data.containsKey('data')) {
+          return DailyMessage.fromJson(response.data['data']);
+        } else {
+          return DailyMessage.fromJson(response.data);
+        }
+      }
+      throw Exception('예상치 못한 응답 형식');
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  // 매일 메시지 삭제
+  Future<void> deleteDailyMessage(String id) async {
+    try {
+      await _dio.delete('/intervalMessage/daily/$id');
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
   // Dio 에러 처리
   String _handleDioError(DioException e) {
     switch (e.type) {
