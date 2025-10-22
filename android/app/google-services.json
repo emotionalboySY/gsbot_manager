@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25230308667",
+    "project_id": "gsbot-manager",
+    "storage_bucket": "gsbot-manager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25230308667:android:309442e7e337ccc717b31e",
+        "android_client_info": {
+          "package_name": "com.example.gsbot_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhIib8lb2oWPvXe3BJUpPb1M5px6ndk7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
