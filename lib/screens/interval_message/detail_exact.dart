@@ -165,7 +165,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildYearPicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedYear,
+      value: _selectedYear,
       decoration: InputDecoration(
         labelText: '연도',
         border: OutlineInputBorder(),
@@ -187,7 +187,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildMonthPicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedMonth,
+      value: _selectedMonth,
       decoration: InputDecoration(
         labelText: '월',
         border: OutlineInputBorder(),
@@ -214,7 +214,7 @@ class ExactTimeMessageDetailScreenState
   Widget _buildDayPicker() {
     final lastDay = DateTime(_selectedYear, _selectedMonth + 1, 0).day;
     return DropdownButtonFormField<int>(
-      initialValue: _selectedDay > lastDay ? lastDay : _selectedDay,
+      value: _selectedDay > lastDay ? lastDay : _selectedDay,
       decoration: InputDecoration(
         labelText: '일',
         border: OutlineInputBorder(),
@@ -236,7 +236,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildHourPicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedHour,
+      value: _selectedHour,
       decoration: InputDecoration(
         labelText: '시',
         border: OutlineInputBorder(),
@@ -257,7 +257,7 @@ class ExactTimeMessageDetailScreenState
 
   Widget _buildMinutePicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedMinute,
+      value: _selectedMinute,
       decoration: InputDecoration(
         labelText: '분',
         border: OutlineInputBorder(),

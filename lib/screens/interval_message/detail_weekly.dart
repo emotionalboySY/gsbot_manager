@@ -121,7 +121,7 @@ class WeeklyMessageDetailScreenState extends State<WeeklyMessageDetailScreen> {
             ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              initialValue: _selectedDayOfWeek,
+              value: _selectedDayOfWeek,
               decoration: InputDecoration(
                 labelText: '요일',
                 border: OutlineInputBorder(),
@@ -160,7 +160,7 @@ class WeeklyMessageDetailScreenState extends State<WeeklyMessageDetailScreen> {
 
   Widget _buildHourPicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedHour,
+      value: _selectedHour,
       decoration: InputDecoration(
         labelText: '시',
         border: OutlineInputBorder(),
@@ -181,7 +181,7 @@ class WeeklyMessageDetailScreenState extends State<WeeklyMessageDetailScreen> {
 
   Widget _buildMinutePicker() {
     return DropdownButtonFormField<int>(
-      initialValue: _selectedMinute,
+      value: _selectedMinute,
       decoration: InputDecoration(
         labelText: '분',
         border: OutlineInputBorder(),
