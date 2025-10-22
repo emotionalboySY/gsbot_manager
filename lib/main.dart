@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gsbot_manager/services/api_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '/screens/boss/index.dart';
@@ -14,7 +15,6 @@ import 'controllers/controller_interval_message.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
 
   // Intl 한국어 로케일 초기화
   await initializeDateFormatting('ko_KR', null);
@@ -34,6 +34,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
+        textTheme: GoogleFonts.notoSansKrTextTheme(
+          Theme.of(context).textTheme
+        ).copyWith(
+          titleLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w900),
+          titleMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
+          bodyLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w400),
+          bodyMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.w300),
+        ),
       ),// Locale 설정 추가
       locale: Locale('ko', 'KR'),
       fallbackLocale: Locale('en', 'US'),
