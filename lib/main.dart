@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gsbot_manager/screens/settings.dart';
 import 'package:gsbot_manager/services/api_service.dart';
 import 'package:gsbot_manager/services/notification_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -92,6 +93,7 @@ class MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     BossScreen(),             // 0: 보스 정보 관리
     IntervalMessageScreen(),  // 1: 정기 메시지 관리
+    SettingsScreen(),         // 2: 설정 (추가!)
     // HexaScreen(),          // 2: HEXA 매트릭스 관리
     // ResponseScreen(),      // 3: 봇 응답 관리
   ];
@@ -120,9 +122,9 @@ class MainScreenState extends State<MainScreen> {
             label: '정기 메시지',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_on_outlined),
-            activeIcon: Icon(Icons.grid_on),
-            label: 'HEXA 매트릭스',
+            icon: Icon(Icons.settings_outlined),  // 설정 아이콘
+            activeIcon: Icon(Icons.settings),
+            label: '설정',  // 설정 탭
           ),
         ],
       ),
