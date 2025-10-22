@@ -1,13 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gsbot_manager/services/api_service.dart';
+import 'package:gsbot_manager/services/notification_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '/screens/boss/index.dart';
 import '/screens/interval_message/index.dart';
 import 'controllers/controller_boss.dart';
 import 'controllers/controller_interval_message.dart';
+import 'firebase_options.dart';
 // import 'controllers/hexa_controller.dart';
 // import 'controllers/response_controller.dart';
 // import 'screens/hexa_screen.dart';
@@ -15,6 +18,16 @@ import 'controllers/controller_interval_message.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  print('🚀 앱 시작...');
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  print('✅ Firebase 초기화 완료');
+
+  await NotificationService.initialize();
+  NotificationService.setupTokenRefreshListener();
 
   // Intl 한국어 로케일 초기화
   await initializeDateFormatting('ko_KR', null);
