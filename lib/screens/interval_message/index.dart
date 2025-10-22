@@ -20,9 +20,9 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         appBar: AppBar(
           title: Text(
             '정기 메시지 관리',
-            style: TextStyle(
-              letterSpacing: -1.5,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(letterSpacing: -1),
           ),
           bottom: TabBar(
             onTap: (index) => controller.setTabIndex(index),
@@ -31,9 +31,9 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
               Tab(text: '요일 시간'),
               Tab(text: '매일'), // 추가
             ],
-            labelStyle: TextStyle(
-              letterSpacing: -1.5,
-            ),
+            labelStyle: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(letterSpacing: -1, fontSize: 14),
           ),
           actions: [
             IconButton(
@@ -44,9 +44,9 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         ),
         body: TabBarView(
           children: [
-            _buildExactTimeTab(),
-            _buildWeeklyTab(),
-            _buildDailyTab(), // 추가
+            _buildExactTimeTab(context),
+            _buildWeeklyTab(context),
+            _buildDailyTab(context), // 추가
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -67,7 +67,7 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
     );
   }
 
-  Widget _buildExactTimeTab() {
+  Widget _buildExactTimeTab(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value && controller.exactTimeMessages.isEmpty) {
         return Center(child: CircularProgressIndicator());
@@ -84,7 +84,11 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
               SizedBox(height: 16),
               Text(
                 '등록된 메시지가 없습니다.',
-                style: TextStyle(fontSize: 18, color: Colors.grey, letterSpacing: -1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 18,
+                  color: Colors.grey,
+                  letterSpacing: -1,
+                ),
               ),
             ],
           ),
@@ -97,14 +101,14 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
           itemCount: messages.length,
           itemBuilder: (context, index) {
             final message = messages[index];
-            return _buildExactTimeMessageCard(message);
+            return _buildExactTimeMessageCard(message, context);
           },
         ),
       );
     });
   }
 
-  Widget _buildWeeklyTab() {
+  Widget _buildWeeklyTab(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value && controller.weeklyMessages.isEmpty) {
         return Center(child: CircularProgressIndicator());
@@ -141,7 +145,7 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
     });
   }
 
-  Widget _buildDailyTab() {
+  Widget _buildDailyTab(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value && controller.dailyMessages.isEmpty) {
         return Center(child: CircularProgressIndicator());
@@ -178,7 +182,10 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
     });
   }
 
-  Widget _buildExactTimeMessageCard(ExactTimeMessage message) {
+  Widget _buildExactTimeMessageCard(
+    ExactTimeMessage message,
+    BuildContext context,
+  ) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
@@ -186,12 +193,13 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         onTap: () {
           Get.to(() => ExactTimeMessageDetailScreen(message: message));
         },
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.access_time,
@@ -201,38 +209,44 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                   Expanded(
                     child: Text(
                       message.formattedDateTime,
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: message.isActive ? Colors.black : Colors.grey,
                         letterSpacing: -1,
                       ),
                     ),
                   ),
-                  Switch(
-                    value: message.isActive,
-                    onChanged: (value) {
-                      if (message.id != null) {
-                        controller.toggleExactTimeMessageActive(message.id!);
-                      }
-                    },
+                  Transform.scale(
+                    scale: 0.7,
+                    child: Switch(
+                      value: message.isActive,
+                      onChanged: (value) {
+                        if (message.id != null) {
+                          controller.toggleExactTimeMessageActive(message.id!);
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              SizedBox(
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: SizedBox(
                 height: 1,
                 width: double.infinity,
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                  ),
+                  decoration: BoxDecoration(color: Colors.grey),
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
                 message.message,
-                style: TextStyle(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 14,
                   color: message.isActive ? Colors.black87 : Colors.grey,
                   letterSpacing: -1,
@@ -240,31 +254,48 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      Get.to(() => ExactTimeMessageDetailScreen(message: message));
-                    },
-                    icon: Icon(Icons.edit, size: 18),
-                    label: Text('수정'),
-                  ),
-                  SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () => _showDeleteDialog(
-                      message.id!,
-                      message.message,
-                      isExact: true,
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    Get.to(
+                      () => ExactTimeMessageDetailScreen(message: message),
+                    );
+                  },
+                  icon: Icon(Icons.edit, size: 18, color: Theme.of(context).primaryColor,),
+                  label: Text(
+                    '수정',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium?.copyWith(
+                        fontSize: 14,
+                        color: Theme.of(context).primaryColor,
+                        letterSpacing: -1,
                     ),
-                    icon: Icon(Icons.delete, size: 18, color: Colors.red),
-                    label: Text('삭제', style: TextStyle(color: Colors.red)),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                TextButton.icon(
+                  onPressed: () => _showDeleteDialog(
+                    message.id!,
+                    message.message,
+                    isExact: true,
+                  ),
+                  icon: Icon(Icons.delete, size: 18, color: Colors.red),
+                  label: Text(
+                    '삭제',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 14,
+                        color: Colors.red,
+                        letterSpacing: -1,
+                    )
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -430,16 +461,18 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
     );
   }
 
-  void _showDeleteDialog(String id, String message, {bool isExact = false, bool isDaily = false}) {
+  void _showDeleteDialog(
+    String id,
+    String message, {
+    bool isExact = false,
+    bool isDaily = false,
+  }) {
     Get.dialog(
       AlertDialog(
         title: Text('메시지 삭제'),
         content: Text('이 메시지를 삭제하시겠습니까?\n\n"$message"\n\n이 작업은 되돌릴 수 없습니다.'),
         actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Text('취소'),
-          ),
+          TextButton(onPressed: () => Get.back(), child: Text('취소')),
           TextButton(
             onPressed: () {
               Get.back();
