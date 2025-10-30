@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gsbot_manager/screens/settings.dart';
 import 'package:gsbot_manager/services/api_service.dart';
 import 'package:gsbot_manager/services/notification_service.dart';
@@ -20,12 +20,16 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('🚀 앱 시작...');
+  if (kDebugMode) {
+    print('🚀 앱 시작...');
+  }
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print('✅ Firebase 초기화 완료');
+  if (kDebugMode) {
+    print('✅ Firebase 초기화 완료');
+  }
 
   await NotificationService.initialize();
   NotificationService.setupTokenRefreshListener();
@@ -48,14 +52,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
-        textTheme: GoogleFonts.notoSansKrTextTheme(
-          Theme.of(context).textTheme
-        ).copyWith(
-          titleLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w900),
-          titleMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-          bodyLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w400),
-          bodyMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.w300),
-        ),
+        fontFamily: "PretendardVariable",
       ),// Locale 설정 추가
       locale: Locale('ko', 'KR'),
       fallbackLocale: Locale('en', 'US'),
