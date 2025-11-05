@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gsbot_manager/screens/boss/create.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import '../../controllers/controller_boss.dart';
 import '../../models/model_boss.dart';
 import 'detail.dart';
@@ -12,7 +13,12 @@ class BossScreen extends GetView<BossController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('보스 정보'),
+        title: Text(
+            '보스 정보',
+          style: TextStyle(
+            fontVariations: CustomFontVariation.black,
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -47,7 +53,11 @@ class BossScreen extends GetView<BossController> {
               SizedBox(height: 16),
               Text(
                 '검색 결과가 없습니다.',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black45,
+                  fontVariations: CustomFontVariation.bold,
+                ),
               ),
             ],
           ),

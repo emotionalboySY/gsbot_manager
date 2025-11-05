@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:gsbot_manager/screens/settings.dart';
 import 'package:gsbot_manager/services/api_service.dart';
 import 'package:gsbot_manager/services/notification_service.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '/screens/boss/index.dart';
 import '/screens/interval_message/index.dart';
@@ -47,32 +48,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'GSBot Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-        fontFamily: "PretendardVariable",
-      ),// Locale 설정 추가
-      locale: Locale('ko', 'KR'),
-      fallbackLocale: Locale('en', 'US'),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('ko', 'KR'),
-        Locale('en', 'US'),
-      ],
-      home: MainScreen(),
-      initialBinding: BindingsBuilder(() {
-        Get.put(BossController());
-        Get.put(IntervalMessageController());
-        // Get.put(HexaController());
-        // Get.put(ResponseController());
-      }),
-      debugShowCheckedModeBanner: false,
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(boldText: false),
+      child: GetMaterialApp(
+        title: 'GSBot Manager',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          useMaterial3: true,
+          fontFamily: "PretendardVariable",
+        ),// Locale 설정 추가
+        locale: Locale('ko', 'KR'),
+        fallbackLocale: Locale('en', 'US'),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('ko', 'KR'),
+          Locale('en', 'US'),
+        ],
+        home: MainScreen(),
+        initialBinding: BindingsBuilder(() {
+          Get.put(BossController());
+          Get.put(IntervalMessageController());
+          // Get.put(HexaController());
+          // Get.put(ResponseController());
+        }),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
@@ -124,6 +128,12 @@ class MainScreenState extends State<MainScreen> {
             label: '설정',  // 설정 탭
           ),
         ],
+        unselectedLabelStyle: TextStyle(
+          fontVariations: CustomFontVariation.regular,
+        ),
+        selectedLabelStyle: TextStyle(
+          fontVariations: CustomFontVariation.bold,
+        ),
       ),
     );
   }

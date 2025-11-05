@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
 import 'create_daily.dart';
@@ -20,20 +21,25 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         appBar: AppBar(
           title: Text(
             '정기 메시지 관리',
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(letterSpacing: -1),
+            style: TextStyle(
+              fontVariations: CustomFontVariation.black,
+              letterSpacing: -1,
+            ),
           ),
           bottom: TabBar(
+            labelStyle: TextStyle(
+              fontVariations: CustomFontVariation.bold,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              letterSpacing: -1,
+            ),
+            unselectedLabelStyle: TextStyle(fontSize: 14),
             onTap: (index) => controller.setTabIndex(index),
             tabs: [
               Tab(text: '정확한 시간'),
               Tab(text: '요일 시간'),
               Tab(text: '매일'), // 추가
             ],
-            labelStyle: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(letterSpacing: -1, fontSize: 14),
           ),
           actions: [
             IconButton(
@@ -209,10 +215,10 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                   Expanded(
                     child: Text(
                       message.formattedDateTime,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: TextStyle(
                         fontSize: 16,
-                        color: message.isActive ? Colors.black : Colors.grey,
-                        letterSpacing: -1,
+                        fontVariations: CustomFontVariation.bold,
+                        letterSpacing: -0.5,
                       ),
                     ),
                   ),
@@ -232,7 +238,7 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
             ),
             SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: SizedBox(
                 height: 1,
                 width: double.infinity,
@@ -246,12 +252,13 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
                 message.message,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: TextStyle(
                   fontSize: 14,
                   color: message.isActive ? Colors.black87 : Colors.grey,
-                  letterSpacing: -1,
+                  letterSpacing: -0.5,
+                  fontVariations: CustomFontVariation.medium,
                 ),
-                maxLines: 2,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -265,15 +272,17 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                       () => ExactTimeMessageDetailScreen(message: message),
                     );
                   },
-                  icon: Icon(Icons.edit, size: 18, color: Theme.of(context).primaryColor,),
+                  icon: Icon(
+                    Icons.edit,
+                    size: 18,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   label: Text(
                     '수정',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium?.copyWith(
-                        fontSize: 14,
-                        color: Theme.of(context).primaryColor,
-                        letterSpacing: -1,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Theme.of(context).primaryColor,
+                      letterSpacing: -1,
                     ),
                   ),
                 ),
@@ -287,10 +296,10 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                   label: Text(
                     '삭제',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: 14,
-                        color: Colors.red,
-                        letterSpacing: -1,
-                    )
+                      fontSize: 14,
+                      color: Colors.red,
+                      letterSpacing: -1,
+                    ),
                   ),
                 ),
               ],
