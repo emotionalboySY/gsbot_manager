@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
 import '../../utils/date_formatter.dart';
@@ -63,7 +65,8 @@ class ExactTimeMessageDetailScreenState
               onPressed: _saveMessage,
               child: Text(
                 '저장',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black,
+                fontVariations: CustomFontVariation.black),
               ),
             ),
           ],
@@ -164,14 +167,18 @@ class ExactTimeMessageDetailScreenState
   }
 
   Widget _buildYearPicker() {
+    final currentYear = DateTime.now().year;
+    final startYear = _selectedYear < currentYear ? _selectedYear : currentYear;
+    final yearCount = 10 + (currentYear - startYear);
+
     return DropdownButtonFormField<int>(
       value: _selectedYear,
       decoration: InputDecoration(
         labelText: '연도',
         border: OutlineInputBorder(),
       ),
-      items: List.generate(10, (index) {
-        final year = DateTime.now().year + index;
+      items: List.generate(yearCount, (index) {
+        final year = startYear + index;
         return DropdownMenuItem(
           value: year,
           child: Text(year.toString()),
@@ -505,7 +512,11 @@ class ExactTimeMessageDetailScreenState
     );
 
     if (success) {
-      Get.back();
+      if (kDebugMode) {
+        print("save success");
+      }
+      if (!mounted) return;
+      Navigator.of(context).pop();
     }
   }
 
