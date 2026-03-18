@@ -19,7 +19,7 @@ class NotificationService {
   // FCM 토큰
   static String? fcmToken;
 
-  // Node.js 서버 URL (실제 EC2 서버 주소로 변경 필요)
+  // Node.js 서버 URL
   static const String serverUrl = 'http://ec2-3-34-171-56.ap-northeast-2.compute.amazonaws.com:3000';
 
   /// 알림 서비스 초기화
@@ -47,6 +47,10 @@ class NotificationService {
     try {
       fcmToken = await _firebaseMessaging.getToken();
       print('📱 FCM Token: $fcmToken');
+
+      if(fcmToken != null && fcmToken!.isNotEmpty) {
+        await sendTokenToServer();
+      }
     } catch (e) {
       print('❌ FCM 토큰 가져오기 실패: $e');
     }
@@ -70,6 +74,9 @@ class NotificationService {
 
     // 백그라운드/종료 상태에서 알림 탭
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageTap);
+
+    // 추가: 토큰 갱신 리스너 설정
+    setupTokenRefreshListener();
 
     print('✅ NotificationService 초기화 완료');
   }

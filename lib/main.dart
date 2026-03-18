@@ -1,12 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gsbot_manager/screens/settings.dart';
 import 'package:gsbot_manager/services/api_service.dart';
 import 'package:gsbot_manager/services/notification_service.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '/screens/boss/index.dart';
 import '/screens/interval_message/index.dart';
@@ -21,12 +22,16 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('🚀 앱 시작...');
+  if (kDebugMode) {
+    print('🚀 앱 시작...');
+  }
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print('✅ Firebase 초기화 완료');
+  if (kDebugMode) {
+    print('✅ Firebase 초기화 완료');
+  }
 
   await NotificationService.initialize();
   NotificationService.setupTokenRefreshListener();
@@ -45,39 +50,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OKToast(
+      child: MediaQuery(
+      data: MediaQuery.of(context).copyWith(boldText: false),
       child: GetMaterialApp(
-      title: 'GSBot Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-        textTheme: GoogleFonts.notoSansKrTextTheme(
-          Theme.of(context).textTheme
-        ).copyWith(
-          titleLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w900),
-          titleMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.bold),
-          bodyLarge: GoogleFonts.notoSansKr(fontWeight: FontWeight.w400),
-          bodyMedium: GoogleFonts.notoSansKr(fontWeight: FontWeight.w300),
-        ),
-      ),// Locale 설정 추가
-      locale: Locale('ko', 'KR'),
-      fallbackLocale: Locale('en', 'US'),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('ko', 'KR'),
-        Locale('en', 'US'),
-      ],
-      home: MainScreen(),
-      initialBinding: BindingsBuilder(() {
-        Get.put(BossController());
-        Get.put(IntervalMessageController());
-        // Get.put(HexaController());
-        // Get.put(ResponseController());
-      }),
-      debugShowCheckedModeBanner: false,
+        title: 'GSBot Manager',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          useMaterial3: true,
+          fontFamily: "PretendardVariable",
+        ),// Locale 설정 추가
+        locale: Locale('ko', 'KR'),
+        fallbackLocale: Locale('en', 'US'),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('ko', 'KR'),
+          Locale('en', 'US'),
+        ],
+        home: MainScreen(),
+        initialBinding: BindingsBuilder(() {
+          Get.put(BossController());
+          Get.put(IntervalMessageController());
+          // Get.put(HexaController());
+          // Get.put(ResponseController());
+        }),
+        debugShowCheckedModeBanner: false,
+      ),
     ),
     );
   }
@@ -130,6 +131,12 @@ class MainScreenState extends State<MainScreen> {
             label: '설정',  // 설정 탭
           ),
         ],
+        unselectedLabelStyle: TextStyle(
+          fontVariations: CustomFontVariation.regular,
+        ),
+        selectedLabelStyle: TextStyle(
+          fontVariations: CustomFontVariation.bold,
+        ),
       ),
     );
   }

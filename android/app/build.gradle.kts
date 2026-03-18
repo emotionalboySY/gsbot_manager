@@ -24,7 +24,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.gsbot_manager"
-        minSdk = 21
+        minSdk = flutter.minSdkVersion
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         targetSdk = flutter.targetSdkVersion
@@ -47,5 +47,5 @@ flutter {
 
 dependencies {
     // Core library desugaring 의존성 추가
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

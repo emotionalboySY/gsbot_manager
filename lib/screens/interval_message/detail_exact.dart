@@ -1,6 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
 import '../../utils/date_formatter.dart';
@@ -56,18 +57,17 @@ class ExactTimeMessageDetailScreenState
         appBar: AppBar(
           title: Text('정확한 시간 메시지 수정'),
           actions: [
-            PopupMenuButton<String>(
-              onSelected: (value) {
-                if (value == 'delete') {
-                  _showDeleteDialog();
-                }
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 'delete',
-                  child: Text('삭제', style: TextStyle(color: Colors.red)),
-                ),
-              ],
+            IconButton(
+              icon: Icon(Icons.delete, color: Colors.red),
+              onPressed: _showDeleteDialog,
+            ),
+            TextButton(
+              onPressed: _saveMessage,
+              child: Text(
+                '저장',
+                style: TextStyle(color: Colors.black,
+                fontVariations: CustomFontVariation.black),
+              ),
             ),
           ],
         ),
@@ -87,33 +87,7 @@ class ExactTimeMessageDetailScreenState
                 _buildPreviewSection(),
                 SizedBox(height: 24),
                 _buildMetadataSection(),
-                SizedBox(height: 80),
               ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            onPressed: _saveMessage,
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 50),
-              backgroundColor: Colors.deepPurple,
-              foregroundColor: Colors.white,
-            ),
-            child: Text(
-              '저장',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -193,16 +167,17 @@ class ExactTimeMessageDetailScreenState
   }
 
   Widget _buildYearPicker() {
+    final currentYear = DateTime.now().year;
+    final startYear = _selectedYear < currentYear ? _selectedYear : currentYear;
+    final yearCount = 10 + (currentYear - startYear);
+
     return DropdownButtonFormField<int>(
       value: _selectedYear,
       decoration: InputDecoration(
         labelText: '연도',
         border: OutlineInputBorder(),
       ),
-      items: List.generate(10, (index) {
-        final startYear = _selectedYear < DateTime.now().year
-            ? _selectedYear
-            : DateTime.now().year;
+      items: List.generate(yearCount, (index) {
         final year = startYear + index;
         return DropdownMenuItem(
           value: year,
@@ -330,8 +305,7 @@ class ExactTimeMessageDetailScreenState
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
               ),
-              minLines: 15,
-              maxLines: 15,
+              maxLines: 5,
               maxLength: 1000,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -514,20 +488,13 @@ class ExactTimeMessageDetailScreenState
 
   void _saveMessage() async {
     if (!_formKey.currentState!.validate()) {
-      showToast('모든 필수 항목을 입력해주세요');
       return;
     }
 
     if (widget.message.id == null) {
-      showToast('메시지 ID를 찾을 수 없습니다.');
+      Get.snackbar('오류', '메시지 ID를 찾을 수 없습니다.');
       return;
     }
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
-    );
 
     final updatedMessage = widget.message.copyWith(
       year: _selectedYear,
@@ -544,15 +511,12 @@ class ExactTimeMessageDetailScreenState
       updatedMessage,
     );
 
-    if (mounted) {
-      Navigator.of(context).pop(); // 로딩 닫기
-
-      if (success) {
-        Navigator.of(context).pop(); // 화면 닫기
-        showToast('메시지가 수정되었습니다.');
-      } else {
-        showToast('메시지 수정에 실패했습니다.');
+    if (success) {
+      if (kDebugMode) {
+        print("save success");
       }
+      if (!mounted) return;
+      Navigator.of(context).pop();
     }
   }
 
