@@ -309,12 +309,13 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         onTap: () {
           Get.to(() => WeeklyMessageDetailScreen(message: message));
         },
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.calendar_today,
@@ -324,58 +325,89 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                   Expanded(
                     child: Text(
                       message.formattedTime,
-                      style: TextStyle(
+                      style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: message.isActive ? Colors.black : Colors.grey,
+                        letterSpacing: -1,
                       ),
                     ),
                   ),
-                  Switch(
-                    value: message.isActive,
-                    onChanged: (value) {
-                      if (message.id != null) {
-                        controller.toggleWeeklyMessageActive(message.id!);
-                      }
-                    },
+                  Transform.scale(
+                    scale: 0.7,
+                    child: Switch(
+                      value: message.isActive,
+                      onChanged: (value) {
+                        if (message.id != null) {
+                          controller.toggleWeeklyMessageActive(message.id!);
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              Text(
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: SizedBox(
+                height: 1,
+                width: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.grey),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
                 message.message,
-                style: TextStyle(
+                style: Theme.of(Get.context!).textTheme.bodyMedium?.copyWith(
                   fontSize: 14,
                   color: message.isActive ? Colors.black87 : Colors.grey,
+                  letterSpacing: -1,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      Get.to(() => WeeklyMessageDetailScreen(message: message));
-                    },
-                    icon: Icon(Icons.edit, size: 18),
-                    label: Text('수정'),
-                  ),
-                  SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () => _showDeleteDialog(
-                      message.id!,
-                      message.message,
-                      isExact: false,
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    Get.to(() => WeeklyMessageDetailScreen(message: message));
+                  },
+                  icon: Icon(Icons.edit, size: 18, color: Theme.of(Get.context!).primaryColor),
+                  label: Text(
+                    '수정',
+                    style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Theme.of(Get.context!).primaryColor,
+                      letterSpacing: -1,
                     ),
-                    icon: Icon(Icons.delete, size: 18, color: Colors.red),
-                    label: Text('삭제', style: TextStyle(color: Colors.red)),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                TextButton.icon(
+                  onPressed: () => _showDeleteDialog(
+                    message.id!,
+                    message.message,
+                    isExact: false,
+                  ),
+                  icon: Icon(Icons.delete, size: 18, color: Colors.red),
+                  label: Text(
+                    '삭제',
+                    style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Colors.red,
+                      letterSpacing: -1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -389,12 +421,13 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
         onTap: () {
           Get.to(() => DailyMessageDetailScreen(message: message));
         },
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.today,
@@ -404,58 +437,89 @@ class IntervalMessageScreen extends GetView<IntervalMessageController> {
                   Expanded(
                     child: Text(
                       message.formattedTime,
-                      style: TextStyle(
+                      style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: message.isActive ? Colors.black : Colors.grey,
+                        letterSpacing: -1,
                       ),
                     ),
                   ),
-                  Switch(
-                    value: message.isActive,
-                    onChanged: (value) {
-                      if (message.id != null) {
-                        controller.toggleDailyMessageActive(message.id!);
-                      }
-                    },
+                  Transform.scale(
+                    scale: 0.7,
+                    child: Switch(
+                      value: message.isActive,
+                      onChanged: (value) {
+                        if (message.id != null) {
+                          controller.toggleDailyMessageActive(message.id!);
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              Text(
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: SizedBox(
+                height: 1,
+                width: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.grey),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
                 message.message,
-                style: TextStyle(
+                style: Theme.of(Get.context!).textTheme.bodyMedium?.copyWith(
                   fontSize: 14,
                   color: message.isActive ? Colors.black87 : Colors.grey,
+                  letterSpacing: -1,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      Get.to(() => DailyMessageDetailScreen(message: message));
-                    },
-                    icon: Icon(Icons.edit, size: 18),
-                    label: Text('수정'),
-                  ),
-                  SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () => _showDeleteDialog(
-                      message.id!,
-                      message.message,
-                      isDaily: true,
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    Get.to(() => DailyMessageDetailScreen(message: message));
+                  },
+                  icon: Icon(Icons.edit, size: 18, color: Theme.of(Get.context!).primaryColor),
+                  label: Text(
+                    '수정',
+                    style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Theme.of(Get.context!).primaryColor,
+                      letterSpacing: -1,
                     ),
-                    icon: Icon(Icons.delete, size: 18, color: Colors.red),
-                    label: Text('삭제', style: TextStyle(color: Colors.red)),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                TextButton.icon(
+                  onPressed: () => _showDeleteDialog(
+                    message.id!,
+                    message.message,
+                    isDaily: true,
+                  ),
+                  icon: Icon(Icons.delete, size: 18, color: Colors.red),
+                  label: Text(
+                    '삭제',
+                    style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
+                      fontSize: 14,
+                      color: Colors.red,
+                      letterSpacing: -1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

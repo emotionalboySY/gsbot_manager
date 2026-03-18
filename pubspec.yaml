@@ -46,6 +46,7 @@ dependencies:
   firebase_messaging: ^14.7.9
   flutter_local_notifications: ^18.0.1
   http: ^1.2.2  # 👈 이 줄 추가
+  oktoast: ^3.4.0
 
 dev_dependencies:
   flutter_test:

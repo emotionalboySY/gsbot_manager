@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gsbot_manager/screens/settings.dart';
 import 'package:gsbot_manager/services/api_service.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return OKToast(
+      child: GetMaterialApp(
       title: 'GSBot Manager',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -76,6 +78,7 @@ class MyApp extends StatelessWidget {
         // Get.put(ResponseController());
       }),
       debugShowCheckedModeBanner: false,
+    ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
 import '../../utils/date_formatter.dart';
@@ -100,7 +101,7 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
             onPressed: _saveMessage,
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 50),
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.deepPurple,
               foregroundColor: Colors.white,
             ),
             child: Text(
@@ -234,7 +235,8 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
                 border: OutlineInputBorder(),
                 alignLabelWithHint: true,
               ),
-              maxLines: 5,
+              minLines: 15,
+              maxLines: 15,
               maxLength: 1000,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -413,16 +415,12 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
 
   void _saveMessage() async {
     if (!_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('모든 필수 항목을 입력해주세요')),
-      );
+      showToast('모든 필수 항목을 입력해주세요');
       return;
     }
 
     if (widget.message.id == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('메시지 ID를 찾을 수 없습니다.')),
-      );
+      showToast('메시지 ID를 찾을 수 없습니다.');
       return;
     }
 
@@ -449,19 +447,9 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
 
       if (success) {
         Navigator.of(context).pop(); // 화면 닫기
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('메시지가 수정되었습니다.'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        showToast('메시지가 수정되었습니다.');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('메시지 수정에 실패했습니다.'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        showToast('메시지 수정에 실패했습니다.');
       }
     }
   }
