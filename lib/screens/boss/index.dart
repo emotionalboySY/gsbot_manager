@@ -153,7 +153,7 @@ class BossScreen extends GetView<BossController> {
                   IconButton(
                     icon: Icon(Icons.edit, color: Colors.blue),
                     onPressed: () {
-                      Get.toNamed('/boss/edit', arguments: boss);
+                      Get.to(() => BossDetailScreen(boss: boss));
                     },
                   ),
                   IconButton(
