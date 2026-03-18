@@ -260,60 +260,66 @@ class BossCreateScreenState extends State<BossCreateScreen> {
               ),
             ),
             SizedBox(height: 16),
-            Obx(() => _imageNameController.text.isNotEmpty
-                ? Container(
-              height: 150,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/images/${_imageNameController.text}',
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.error, color: Colors.red),
-                          Text('이미지를 찾을 수 없습니다'),
-                          Text(
-                            'assets/images/${_imageNameController.text}',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
-                : Container(
-              height: 150,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[100],
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.image, size: 48, color: Colors.grey),
-                    Text('이미지 미리보기'),
-                    Text(
-                      'assets/images/ 폴더에 이미지를 넣고\n파일명을 입력하세요',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+            ValueListenableBuilder(
+              valueListenable: _imageNameController,
+              builder: (context, value, _) {
+                if (value.text.isNotEmpty) {
+                  return Container(
+                    height: 150,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ],
-                ),
-              ),
-            )),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        'assets/images/${value.text}',
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.error, color: Colors.red),
+                                Text('이미지를 찾을 수 없습니다'),
+                                Text(
+                                  'assets/images/${value.text}',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }
+                return Container(
+                  height: 150,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[100],
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.image, size: 48, color: Colors.grey),
+                        Text('이미지 미리보기'),
+                        Text(
+                          'assets/images/ 폴더에 이미지를 넣고\n파일명을 입력하세요',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
