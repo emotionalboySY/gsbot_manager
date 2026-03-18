@@ -55,16 +55,18 @@ class ExactTimeMessageDetailScreenState
         appBar: AppBar(
           title: Text('정확한 시간 메시지 수정'),
           actions: [
-            IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: _showDeleteDialog,
-            ),
-            TextButton(
-              onPressed: _saveMessage,
-              child: Text(
-                '저장',
-                style: TextStyle(color: Colors.white),
-              ),
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'delete') {
+                  _showDeleteDialog();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Text('삭제', style: TextStyle(color: Colors.red)),
+                ),
+              ],
             ),
           ],
         ),
@@ -84,7 +86,33 @@ class ExactTimeMessageDetailScreenState
                 _buildPreviewSection(),
                 SizedBox(height: 24),
                 _buildMetadataSection(),
+                SizedBox(height: 80),
               ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+                offset: Offset(0, -2),
+              ),
+            ],
+          ),
+          child: ElevatedButton(
+            onPressed: _saveMessage,
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(
+              '저장',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         ),

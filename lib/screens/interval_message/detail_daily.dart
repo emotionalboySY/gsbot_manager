@@ -48,15 +48,18 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
         appBar: AppBar(
           title: Text('매일 메시지 수정'),
           actions: [
-            IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: _showDeleteDialog,
-              tooltip: '삭제',
-            ),
-            IconButton(
-              icon: Icon(Icons.check),
-              onPressed: _saveMessage,
-              tooltip: '저장',
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'delete') {
+                  _showDeleteDialog();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Text('삭제', style: TextStyle(color: Colors.red)),
+                ),
+              ],
             ),
           ],
         ),
