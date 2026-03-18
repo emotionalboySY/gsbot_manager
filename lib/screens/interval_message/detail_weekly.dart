@@ -149,34 +149,39 @@ class WeeklyMessageDetailScreenState extends State<WeeklyMessageDetailScreen> {
               ),
             ),
             SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedDayOfWeek,
-              decoration: InputDecoration(
-                labelText: '요일',
-                border: OutlineInputBorder(),
-              ),
-              items: WeeklyMessage.daysOfWeek.map((day) {
-                return DropdownMenuItem(
-                  value: day,
-                  child: Text('$day요일'),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedDayOfWeek = value!;
-                });
-              },
-            ),
-            SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
+                  flex: 3,
+                  child: DropdownButtonFormField<String>(
+                    value: _selectedDayOfWeek,
+                    decoration: InputDecoration(
+                      labelText: '요일',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: WeeklyMessage.daysOfWeek.map((day) {
+                      return DropdownMenuItem(
+                        value: day,
+                        child: Text('$day요일'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedDayOfWeek = value!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
                   child: _buildHourPicker(),
                 ),
                 SizedBox(width: 8),
                 Text(':', style: TextStyle(fontSize: 24)),
                 SizedBox(width: 8),
                 Expanded(
+                  flex: 2,
                   child: _buildMinutePicker(),
                 ),
               ],

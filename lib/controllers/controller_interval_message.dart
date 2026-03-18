@@ -158,18 +158,8 @@ class IntervalMessageController extends GetxController {
         });
       }
 
-      Get.snackbar(
-        '성공',
-        '메시지가 수정되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 수정에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;
@@ -238,18 +228,8 @@ class IntervalMessageController extends GetxController {
         _sortWeeklyMessages();
       }
 
-      Get.snackbar(
-        '성공',
-        '메시지가 수정되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 수정에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;
