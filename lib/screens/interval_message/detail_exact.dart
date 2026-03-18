@@ -171,7 +171,10 @@ class ExactTimeMessageDetailScreenState
         border: OutlineInputBorder(),
       ),
       items: List.generate(10, (index) {
-        final year = DateTime.now().year + index;
+        final startYear = _selectedYear < DateTime.now().year
+            ? _selectedYear
+            : DateTime.now().year;
+        final year = startYear + index;
         return DropdownMenuItem(
           value: year,
           child: Text(year.toString()),
