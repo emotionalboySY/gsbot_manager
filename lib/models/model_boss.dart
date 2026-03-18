@@ -35,36 +35,44 @@ class Phase {
 }
 
 class SpecialItems {
-  final List<String> chilheuk;
-  final List<String> eternal;
-  final List<String> gwanghwi;
-  final List<String> guarantee;
-  final List<String> exceptional;
+  final List<String> yeomyeong; // 여명
+  final List<String> chilheuk;  // 칠흑
+  final List<String> absolab;   // 앱솔랩스
+  final List<String> arcane;    // 아케인셰이드
+  final List<String> eternal;   // 에테르넬
+  final List<String> gwanghwi;  // 광휘
+  final List<String> exceptional; // 익셉셔널
 
   SpecialItems({
+    this.yeomyeong = const [],
     this.chilheuk = const [],
+    this.absolab = const [],
+    this.arcane = const [],
     this.eternal = const [],
     this.gwanghwi = const [],
-    this.guarantee = const [],
     this.exceptional = const [],
   });
 
   factory SpecialItems.fromJson(Map<String, dynamic> json) {
     return SpecialItems(
+      yeomyeong: List<String>.from(json['yeomyeong'] ?? []),
       chilheuk: List<String>.from(json['chilheuk'] ?? []),
+      absolab: List<String>.from(json['absolab'] ?? []),
+      arcane: List<String>.from(json['arcane'] ?? []),
       eternal: List<String>.from(json['eternal'] ?? []),
       gwanghwi: List<String>.from(json['gwanghwi'] ?? []),
-      guarantee: List<String>.from(json['guarantee'] ?? []),
       exceptional: List<String>.from(json['exceptional'] ?? []),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'yeomyeong': yeomyeong,
       'chilheuk': chilheuk,
+      'absolab': absolab,
+      'arcane': arcane,
       'eternal': eternal,
       'gwanghwi': gwanghwi,
-      'guarantee': guarantee,
       'exceptional': exceptional,
     };
   }
