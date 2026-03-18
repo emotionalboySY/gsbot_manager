@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import '../models/model_interval_message.dart';
 import '../services/api_service.dart';
 
@@ -68,11 +68,7 @@ class IntervalMessageController extends GetxController {
       final result = await _apiService.getAllExactTimeMessages();
       exactTimeMessages.value = result;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '정확한 시간 메시지를 불러오는데 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      showToast('정확한 시간 메시지를 불러오는데 실패했습니다.');
     } finally {
       isLoading.value = false;
     }
@@ -85,11 +81,7 @@ class IntervalMessageController extends GetxController {
       final result = await _apiService.getAllWeeklyMessages();
       weeklyMessages.value = result;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '요일 메시지를 불러오는데 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      showToast('요일 메시지를 불러오는데 실패했습니다.');
     } finally {
       isLoading.value = false;
     }
@@ -102,11 +94,7 @@ class IntervalMessageController extends GetxController {
       final result = await _apiService.getAllDailyMessages();
       dailyMessages.value = result;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '매일 메시지를 불러오는데 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      showToast('매일 메시지를 불러오는데 실패했습니다.');
     } finally {
       isLoading.value = false;
     }
@@ -123,19 +111,8 @@ class IntervalMessageController extends GetxController {
         final dateB = DateTime(b.year, b.month, b.day, b.hour, b.minute);
         return dateA.compareTo(dateB);
       });
-      Get.snackbar(
-        '성공',
-        '메시지가 생성되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green[100],
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 생성에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;
@@ -173,18 +150,8 @@ class IntervalMessageController extends GetxController {
       await _apiService.deleteExactTimeMessage(id);
       exactTimeMessages.removeWhere((message) => message.id == id);
 
-      Get.snackbar(
-        '성공',
-        '메시지가 삭제되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 삭제에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;
@@ -198,18 +165,8 @@ class IntervalMessageController extends GetxController {
       final newMessage = await _apiService.createWeeklyMessage(message);
       weeklyMessages.add(newMessage);
       _sortWeeklyMessages();
-      Get.snackbar(
-        '성공',
-        '메시지가 생성되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 생성에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;
@@ -243,18 +200,8 @@ class IntervalMessageController extends GetxController {
       await _apiService.deleteWeeklyMessage(id);
       weeklyMessages.removeWhere((message) => message.id == id);
 
-      Get.snackbar(
-        '성공',
-        '메시지가 삭제되었습니다.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return true;
     } catch (e) {
-      Get.snackbar(
-        '오류',
-        '메시지 삭제에 실패했습니다: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
       return false;
     } finally {
       isLoading.value = false;

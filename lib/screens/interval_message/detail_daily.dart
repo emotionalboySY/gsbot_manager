@@ -473,12 +473,7 @@ class DailyMessageDetailScreenState extends State<DailyMessageDetailScreen> {
                 if (success) {
                   if (mounted) {
                     Navigator.of(context).pop(); // 상세 화면도 닫기
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('메시지가 삭제되었습니다.'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
+                    showToast('메시지가 삭제되었습니다.');
                   }
                 }
               }

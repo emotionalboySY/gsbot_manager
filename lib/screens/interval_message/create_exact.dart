@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
 
@@ -393,12 +394,7 @@ class CreateExactTimeMessageScreenState
 
   void _saveMessage() async {
     if (!_formKey.currentState!.validate()) {
-      Get.snackbar(
-        '입력 오류',
-        '모든 필수 항목을 입력해주세요',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red[100],
-      );
+      showToast('모든 필수 항목을 입력해주세요');
       return;
     }
 
@@ -431,33 +427,16 @@ class CreateExactTimeMessageScreenState
         // 생성 화면 닫기
         if (mounted) {
           Navigator.of(context).pop();
-          // 스낵바는 이전 화면에서 표시
-          Get.snackbar(
-            '성공',
-            '메시지가 생성되었습니다.',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green[100],
-          );
+          showToast('메시지가 생성되었습니다.');
         }
       } else {
-        Get.snackbar(
-          '저장 실패',
-          '메시지 저장에 실패했습니다.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red[100],
-        );
+        showToast('메시지 저장에 실패했습니다.');
       }
     } catch (e) {
       // 로딩 다이얼로그 닫기
       if (mounted) Navigator.of(context).pop();
 
-      Get.snackbar(
-        '오류',
-        '저장 중 오류가 발생했습니다: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red[100],
-        duration: Duration(seconds: 5),
-      );
+      showToast('저장 중 오류가 발생했습니다.');
     }
   }
 }

@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:gsbot_manager/utils/custom_font_variation.dart';
 import '../../controllers/controller_interval_message.dart';
 import '../../models/model_interval_message.dart';
@@ -492,7 +492,7 @@ class ExactTimeMessageDetailScreenState
     }
 
     if (widget.message.id == null) {
-      Get.snackbar('오류', '메시지 ID를 찾을 수 없습니다.');
+      showToast('메시지 ID를 찾을 수 없습니다.');
       return;
     }
 
@@ -512,11 +512,11 @@ class ExactTimeMessageDetailScreenState
     );
 
     if (success) {
-      if (kDebugMode) {
-        print("save success");
-      }
       if (!mounted) return;
       Navigator.of(context).pop();
+      showToast('메시지가 수정되었습니다.');
+    } else {
+      showToast('메시지 수정에 실패했습니다.');
     }
   }
 
